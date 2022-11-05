@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+:root{
+  --main-bg:#585858;
+}
+
+.main-bg {
+  background: var(--main-bg) !important;
+}
+
+input:focus, button:focus {
+  border: 1px solid var(--main-bg) !important;
+  box-shadow: none !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--main-bg) !important;
+  border-color: var(--main-bg) !important;
+}
+
+.card, .btn, input{
+  border-radius:0 !important;
+}
+.nav_1 li a{
+	color: black !important
+}
+.invoice_form input:focus{
+ border: 2px solid #001aa0 !important
+}
+.invoice_button{
+	display: flex;
+	justify-content: center
+}
+.invoice_button button{
+	background-color: #001aa0 !important;
+}
+.modal-body{
+	display: flex;
+	justify-content: center
+}
+.modal-body button {
+    background-color: #001aa0 !important;
+}
+.invoice_logout{
+	background-color: #001aa0 !important;
+}
+.invoice_logout a{
+	color: white !important
+}
+
+
+
+
