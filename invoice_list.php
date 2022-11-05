@@ -64,7 +64,7 @@ include "db_conn.php";
           </tr>
 			<?php
 	  
-	  	$query1="select * from `invoice_bill`";
+	  	$query1="SELECT * FROM `invoice_bill` ORDER BY date DESC";
 	  	$dis=mysqli_query($conn,$query1)or die (mysqli_error());
 	  	while($row=mysqli_fetch_array($dis))
 		{
