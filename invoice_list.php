@@ -39,6 +39,7 @@ include "db_conn.php";
         <form>
           <input class="form-control" type="text" placeholder="Search" aria-label="Search">
         </form>
+        <button type="button" class="btn invoice_logout mx-2"><a class="text-decoration-none" href="#">Search</a></button>
 		  <button type="button" class="btn invoice_logout mx-2"><a class="text-decoration-none" href="logout.php">Logout</a></button>
 		  <a class="navbar-brand" href="#"><img src="assets/img/logo 2.png" alt="" width="150" height="100"></a>
       </div>
