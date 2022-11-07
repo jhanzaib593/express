@@ -39,7 +39,8 @@ input:focus, button:focus {
 	justify-content: center
 }
 .modal-body button {
-    background-color: #001aa0 !important;
+  display:  none;
+    /* background-color: #001aa0 !important; */
 }
 .invoice_logout{
 	background-color: #001aa0 !important;
