@@ -18,21 +18,22 @@
         <div class="card shadow">
           <div class="card-title text-center border-bottom">
             <h2 class="p-3">Login</h2>
-			  <?php if (isset($_GET['error'])) { ?>
+			  
+          </div>
+          <div class="card-body">
+            <form action="login.php" method="post">
+				<?php if(isset($_GET['error'])) { ?>
 
             		<p class="error"><?php echo $_GET['error']; ?></p>
 
        			 <?php } ?>
-          </div>
-          <div class="card-body">
-            <form action="">
               <div class="mb-4">
-                <label for="username" class="form-label">Username/Email</label>
-                <input type="text" class="form-control" id="username" />
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" name="uname" placeholder="User Name"/>
               </div>
               <div class="mb-4">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" />
+                <label for="password1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password" id="password1"/>
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn text-light main-bg">Login</button>
