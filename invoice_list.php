@@ -16,6 +16,8 @@ include "db_conn.php";
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootbox.min.js"></script>
+<script type="text/javascript" src="assets/js/deleteRecords.js"></script>
 
 
 </head>	
@@ -64,7 +66,7 @@ include "db_conn.php";
           </tr>
 			<?php
 	  
-	  	$query1="SELECT * FROM `invoice_bill` ORDER BY date DESC";
+	  	$query1="SELECT * FROM `invoice_bill` ORDER BY serailnunber1 DESC";
 	  	$dis=mysqli_query($conn,$query1)or die (mysqli_error());
 	  	while($row=mysqli_fetch_array($dis))
 		{
@@ -82,7 +84,7 @@ include "db_conn.php";
 	  <td><?php echo $row[20]?></td>
 		<td><a href="print.php?printid=<?php echo $id?>" target="_blank"><i class="fa fa-print"></i></a></td>
 		<td><a href="edit.php?updateid=<?php echo $id?>"><i class="fa fa-pen"></i></a></td>
-		<td><a href="delete.php?deleteid=<?php echo $id?>" >
+		<td><a class="delete_employee" data-emp-id="<?php echo $id; ?>" href="javascript:void(0)">
 			<i class="fa fa-trash"></i></a></td>
       
     </tr>

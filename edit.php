@@ -16,18 +16,30 @@ include "db_conn.php";
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
 	<script>
-		function mty() {
-  		var a = parseInt(document.getElementById("weight").value);
-  		var b = parseInt(document.getElementById("price").value);
-  		var c = parseInt(document.getElementById("totaltransport").value);
-  		var d = parseInt(document.getElementById("packing").value);
-  		var e = parseInt(document.getElementById("custom").value);
-  		var f = parseInt(document.getElementById("discount").value);
-  		
-  		
-		document.getElementById("total").value = a * b ;
-		
-		
+		function add_number(e) {
+  if (isNumberKey(e)) {
+    setTimeout(() => {
+      var weight = document.getElementById("weight").value !== "" ? parseInt(document.getElementById("weight").value) : 0;
+      var price = document.getElementById("price").value !== "" ? parseInt(document.getElementById("price").value) : 0;
+      var totaltransport = document.getElementById("totaltransport").value !== "" ? parseInt(document.getElementById("totaltransport").value) : 0;
+      var packing = document.getElementById("packing").value !== "" ? parseInt(document.getElementById("packing").value) : 0;
+      var custom = document.getElementById("custom").value !== "" ? parseInt(document.getElementById("custom").value) : 0;
+      var discount = document.getElementById("discount").value !== "" ? parseInt(document.getElementById("discount").value) : 0;
+      var result = weight * price + totaltransport + packing + custom - discount;
+      document.getElementById("total").value = result;
+    }, 50)
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isNumberKey(evt) {
+  var charCode = (evt.which) ? evt.which : event.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
 }
 	</script>
 	
@@ -195,7 +207,7 @@ include "db_conn.php";
 			<div class="row mt-2">
     			<div class="col-md-6">
 					<label for="" class="form-label">وزن</label>
-    				<input type="number" class="form-control" id="weight" value="<?php echo $weight1?>" name="weight" placeholder="weight in Kg">
+    				<input type="number" class="form-control" id="weight" value="<?php echo $weight1?>" name="weight" placeholder="weight in Kg" onkeypress="return add_number(event)">
 				</div>
 				<div class="col-md-6">
 					<label for="" class="form-label">فون نمبر</label>
@@ -205,7 +217,7 @@ include "db_conn.php";
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">ریٹ</label>
-    				<input type="number" class="form-control" id="price" value="<?php echo $price1?>" name="price" onkeyup="mty()">
+    				<input type="number" class="form-control" id="price" value="<?php echo $price1?>" name="price" onkeypress="return add_number(event)">
 				</div>
     			<div class="col-md-6">
 					<label for="Province" class="form-label">صوبہ</label>
@@ -243,35 +255,35 @@ include "db_conn.php";
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">لوکل ٹرانسپورٹ</label>
-    				<input type="number" class="form-control" id="totaltransport" value="<?php echo $ttransport1?>" name="totaltransport">
+    				<input type="number" class="form-control" onkeypress="return add_number(event)" id="totaltransport" value="<?php echo $ttransport1?>" name="totaltransport">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">پیکینگ</label>
-    				<input type="number" class="form-control" id="packing" value="<?php echo $packing1?>" name="packing">
+    				<input type="number" class="form-control" onkeypress="return add_number(event)" id="packing" value="<?php echo $packing1?>" name="packing">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">کسٹم</label>
-    				<input type="number" class="form-control" id="custom" value="<?php echo $custom1?>" name="custom">
+    				<input type="number" class="form-control" onkeypress="return add_number(event)" id="custom" value="<?php echo $custom1?>" name="custom">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">ٹوٹل وزن</label>
-    				<input type="number" class="form-control" id="" value="<?php echo $tweight1?>" name="totalweight">
+    				<input type="number" class="form-control" onkeypress="return add_number(event)" id="" readonly value="0" name="totalweight">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">رعایت</label>
-    				<input type="number" class="form-control" id="discount" value="<?php echo $discount1?>" name="discount">
+    				<input type="number" class="form-control" onkeypress="return add_number(event)" id="discount" value="<?php echo $discount1?>" name="discount">
 				</div>
 				
 			</div>
@@ -286,7 +298,7 @@ include "db_conn.php";
 			 
 			<div class="invoice_button" dir="ltr">
 				<button type="submit"  class="btn btn-primary m-3 fw-bold" >update</button>
-				<button type="reset"  class="btn btn-primary m-3 fw-bold" >clare</button>
+				<button type="reset"  class="btn btn-primary m-3 fw-bold" >Clear</button>
 			</div>
 		</form>
 	

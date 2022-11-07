@@ -17,18 +17,44 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
 	<script>
-		function mty() {
+	/*	function mty() {
+			var c = 0, d = 0, e = 0, f = 0; 
   		var a = parseInt(document.getElementById("weight").value);
   		var b = parseInt(document.getElementById("price").value);
-  		var c = parseInt(document.getElementById("totaltransport").value);
-  		var d = parseInt(document.getElementById("packing").value);
-  		var e = parseInt(document.getElementById("custom").value);
-  		var f = parseInt(document.getElementById("discount").value);
+  		c = parseInt(document.getElementById("totaltransport").value);
+  		d = parseInt(document.getElementById("packing").value);
+  		e = parseInt(document.getElementById("custom").value);
+  		f = parseInt(document.getElementById("discount").value);
   		
   		
-		document.getElementById("total").value = a * b ;
+		document.getElementById("total").value = a*b + c + d + e + - f;
 		
 		
+}*/
+	function add_number(e) {
+  if (isNumberKey(e)) {
+    setTimeout(() => {
+      var weight = document.getElementById("weight").value !== "" ? parseInt(document.getElementById("weight").value) : 0;
+      var price = document.getElementById("price").value !== "" ? parseInt(document.getElementById("price").value) : 0;
+      var totaltransport = document.getElementById("totaltransport").value !== "" ? parseInt(document.getElementById("totaltransport").value) : 0;
+      var packing = document.getElementById("packing").value !== "" ? parseInt(document.getElementById("packing").value) : 0;
+      var custom = document.getElementById("custom").value !== "" ? parseInt(document.getElementById("custom").value) : 0;
+      var discount = document.getElementById("discount").value !== "" ? parseInt(document.getElementById("discount").value) : 0;
+      var result = weight * price + totaltransport + packing + custom - discount;
+      document.getElementById("total").value = result;
+    }, 50)
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isNumberKey(evt) {
+  var charCode = (evt.which) ? evt.which : event.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
 }
 	</script>
 	
@@ -96,6 +122,7 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 		 $result=mysqli_query($conn,$query) ;
 		 if($result){
 			echo  "<script>
+			alert('Data stored');
 			</script>";
 /*
 				header("Location: print1.php");
@@ -170,7 +197,7 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 			<div class="row mt-2">
     			<div class="col-md-6">
 					<label for="" class="form-label">وزن</label>
-    				<input type="number" class="form-control" id="weight" name="weight" placeholder="weight in Kg">
+    				<input type="number" class="form-control" id="weight" name="weight" onkeypress="return add_number(event)" placeholder="weight in Kg">
 				</div>
 				<div class="col-md-6">
 					<label for="" class="form-label">فون نمبر</label>
@@ -180,7 +207,7 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">ریٹ</label>
-    				<input type="number" class="form-control" id="price" name="price" onkeyup="mty()">
+    				<input type="number" class="form-control" id="price" name="price" onkeypress="return add_number(event)">
 				</div>
     			<div class="col-md-6">
 					<label for="Province" class="form-label">صوبہ</label>
@@ -218,35 +245,35 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">لوکل ٹرانسپورٹ</label>
-    				<input type="number" class="form-control" id="totaltransport" name="totaltransport">
+    				<input type="number" class="form-control" id="totaltransport" name="totaltransport" onkeypress="return add_number(event)">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">پیکینگ</label>
-    				<input type="number" class="form-control" id="packing" name="packing">
+    				<input type="number" class="form-control" id="packing" name="packing" onkeypress="return add_number(event)">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">کسٹم</label>
-    				<input type="number" class="form-control" id="custom" name="custom">
+    				<input type="number" class="form-control" id="custom" name="custom" onkeypress="return add_number(event)">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">ٹوٹل وزن</label>
-    				<input type="number" class="form-control" id="" name="totalweight">
+    				<input type="number" class="form-control" id="totalweight" name="totalweight" readonly value="0">
 				</div>
 				
 			</div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<label for="" class="form-label">رعایت</label>
-    				<input type="number" class="form-control" id="discount" name="discount">
+    				<input type="number" class="form-control" id="discount" name="discount" onkeypress="return add_number(event)">
 				</div>
 				
 			</div>
@@ -261,7 +288,7 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
 			 
 			<div class="invoice_button" dir="ltr">
 				<button type="submit"  class="btn btn-primary m-3 fw-bold">Save</button>
-				<button type="button" class="btn btn-primary m-3 fw-bold" data-bs-toggle="modal" data-bs-target="#myModal">Save & Paid</button>
+				<button type="button" onKeyUp="mty()" class="btn btn-primary m-3 fw-bold">Save & Paid</button>
 			</div>
 		</form>
 	<div class="modal" id="myModal">
