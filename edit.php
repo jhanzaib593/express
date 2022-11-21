@@ -298,7 +298,6 @@ function isNumberKey(evt) {
 			 
 			<div class="invoice_button" dir="ltr">
 				<button type="submit"  class="btn btn-primary m-3 fw-bold" >update</button>
-				<button type="reset"  class="btn btn-primary m-3 fw-bold" >Clear</button>
 			</div>
 		</form>
 	

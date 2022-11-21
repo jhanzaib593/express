@@ -18,12 +18,17 @@ include "db_conn.php";
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/bootbox.min.js"></script>
 <script type="text/javascript" src="assets/js/deleteRecords.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 
 </head>	
-	<body>
-		<nav class="navbar navbar-expand-lg bg-light " aria-label="Eighth navbar example">
-    <div class="container">
+	
+<body>
+	
+<nav class="navbar navbar-expand-lg bg-light " aria-label="Eighth navbar example">
+   <div class="container">
       <a class="navbar-brand" href="#"><img src="assets/img/logo.png" alt="" width="300" height="100"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,96 +43,135 @@ include "db_conn.php";
             <a class="nav-link" href="invoice_list.php">List Invoice</a>
           </li>
         </ul>
-        <form>
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-        </form>
-        <button type="button" class="btn invoice_logout mx-2"><a class="text-decoration-none" href="#">Search</a></button>
+       <form action="search.php" method="get">
+          <input class="form-control" type="text" name="search" placeholder="Search" aria-label="Search">
+        
+			</form>
 		  <button type="button" class="btn invoice_logout mx-2"><a class="text-decoration-none" href="logout.php">Logout</a></button>
 		  <a class="navbar-brand" href="#"><img src="assets/img/logo 2.png" alt="" width="150" height="100"></a>
       </div>
     </div>
-  </nav>
-	<div class="container">		
-	  <h1 class="title text-center my-3">List Invoice</h1>
-	  			  
-      <table id="data-table" class="table table-condensed table-striped">
-        <thead>
-          <tr>
+  </nav>'
+	
+	
+
+	<?php
+$sub_sql="";
+$toDate=$fromDate="";
+if(isset($_POST['submit'])){
+	$from=$_POST['from'];
+	$fromDate=$from;
+	$fromArr=explode("/",$from);
+	$from=$fromArr['2'].'-'.$fromArr['1'].'-'.$fromArr['0'];
+	$from=$from." 00:00:00";
+	
+	$to=$_POST['to'];
+	$toDate=$to;
+	$toArr=explode("/",$to);
+	$to=$toArr['2'].'-'.$toArr['1'].'-'.$toArr['0'];
+	$to=$to." 23:59:59";
+	
+	$sub_sql= " where date >= '$from' && date <= '$to' ";
+}
+
+$res=mysqli_query($conn,"select * from invoice_bill $sub_sql order by serailnunber1 desc");
+?>
+<div class="container">		
+	<form method="post" class="">
+		<label for="from">From</label>
+		<input class="date" type="text" id="from" name="from" required value="<?php echo $fromDate?>">
+		<label for="to">to</label>
+		<input class="date" type="text" id="to" name="to" required value="<?php echo $toDate?>">
+		<input type="submit" name="submit" value="Filter">
+	</form>
+		  <h1 class="title text-center my-3">List Invoice</h1>
+	  		<form action="Excel.php" method="post">
+				<button type="submit" name="submit" class="btn btn-outline-primary float-end">Download</button>
+			</form>	  
+<table id="data-table" class="table table-condensed table-striped">
+    <thead>
+       <tr>
             <th>سیریل نمبر</th>
             <th>نام</th>
             <th>فون</th>
             <th>وصول کنده نام</th>
             <th>وصول کنده فون نمبر</th>
-            <th>شہر و گاوں</th>
+            <th>تاریخ</th>
             <th>ٹوٹل رینگیٹ</th>
             <th>Print</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
-			<?php
-	  
-	  	$query1="SELECT * FROM `invoice_bill` ORDER BY serailnunber1 DESC";
-	  	$dis=mysqli_query($conn,$query1)or die (mysqli_error());
-	  	while($row=mysqli_fetch_array($dis))
-		{
-			$id= $row[1];
-	  
-	  ?>
-	  
-    <tr>
-      <td><?php echo $id?></td>
-      <td><?php echo $row[4]?></td>
-	  <td><?php echo $row[6]?></td>
-      <td><?php echo $row[7]?></td>
-      <td><?php echo $row[5]?></td>
-      <td><?php echo $row[15]?></td>
-	  <td><?php echo $row[20]?></td>
+    </thead>
+	<?php if(mysqli_num_rows($res)>0){?>
+
+    <tbody>
+      <?php while($row=mysqli_fetch_assoc($res)){
+		$id= $row['serailnunber1'];
+		
+		?>
+      
+		<tr>
+      <td><?php echo $row['serailnunber1']?></td>
+        <td><?php echo $row['sname']?></td>
+		<td><?php echo $row['phonenum']?></td>
+		<td><?php echo $row['receivedname']?></td>
+		<td><?php echo $row['receivednum']?></td>
+		<td><?php echo $row['date']?></td>
+		<td><?php echo $row['totalprice']?></td>
 		<td><a href="print.php?printid=<?php echo $id?>" target="_blank"><i class="fa fa-print"></i></a></td>
 		<td><a href="edit.php?updateid=<?php echo $id?>"><i class="fa fa-pen"></i></a></td>
 		<td><a class="delete_employee" data-emp-id="<?php echo $id; ?>" href="javascript:void(0)">
 			<i class="fa fa-trash"></i></a></td>
       
     </tr>
-			
-			<div class="modal" id="myModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+	  <?php } ?>
+    </tbody>
+  </table>
+  <?php } else {
+	echo "No data found";  
+  }
+  ?>
+<script>
+  $( function() {
+    var dateFormat = "dd/mm/yy",
+      from = $( "#from" )
+        .datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 1,
+		  dateFormat:"dd/mm/yy",
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+		dateFormat:"dd/mm/yy",
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    }
+  } );
+  </script>
+	
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title ">Do you </h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+	
 
-      <!-- Modal body 
-      <div class="modal-body">
-         <button type="submit" class="btn btn-primary fw-bold">
-			 <a class="text-decoration-none text-light" href="delete.php?deleteid=">Yes</a>
-		  </button>
-      </div>-->
-
-
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-center">
-        
-        <button type="submit" class="btn btn-primary fw-bold">
-			 <a class="text-decoration-none text-light" href="<?php echo $id?>">Yes</a>
-		  </button>
-      <button type="button" class="btn btn-danger ms-3" data-bs-dismiss="modal">No</button>
-      </div>
-
-    </div>
-  </div>
 </div>
-	  
-	  <?php
-		}
-	  ?>
-		
-        </thead>
-		  
-      </table>	
-
-</div>	
-		</body>
+	
+</body>
 </html>

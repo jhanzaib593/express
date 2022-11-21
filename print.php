@@ -213,7 +213,9 @@
 	<p class="fw-bolder text-center">Address : No 65 Jalan Mulia Taman Mulia 42700 Banting Selangor</p>
 	<center>
 		<button class="btn btn-outline-danger my-5" id="PrintButton" onclick="PrintPage()">Print</button>
+<!--
 		<button class="btn btn-outline-danger my-5" id="share" onclick="Share()">Share</button> 
+-->
 		
 	</center>
 </body>
@@ -227,6 +229,10 @@
 	document.loaded = function(){
 		
 	}
+		window.addEventListener('DOMContentLoaded', (event) => {
+   		PrintPage()
+		setTimeout(function(){ window.close() },750)
+	});
 	
 	
 </script>

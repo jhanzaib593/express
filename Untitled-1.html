@@ -203,3 +203,38 @@
   
 </body>
 </html>
+
+
+
+
+<?php
+	  
+	  	$query1="SELECT * FROM `invoice_bill` ORDER BY serailnunber1 DESC";
+	  	$dis=mysqli_query($conn,$query1)or die (mysqli_error());
+	  	while($row=mysqli_fetch_array($dis))
+		{
+			$id= $row[1];
+	  
+	  ?>
+	  
+    <tr>
+      <td><?php echo $id?></td>
+      <td><?php echo $row[4]?></td>
+	  <td><?php echo $row[6]?></td>
+      <td><?php echo $row[7]?></td>
+      <td><?php echo $row[5]?></td>
+      <td><?php echo $row[2]?></td>
+	  <td><?php echo $row[20]?></td>
+		<td><a href="print.php?printid=<?php echo $id?>" target="_blank"><i class="fa fa-print"></i></a></td>
+		<td><a href="edit.php?updateid=<?php echo $id?>"><i class="fa fa-pen"></i></a></td>
+		<td><a class="delete_employee" data-emp-id="<?php echo $id; ?>" href="javascript:void(0)">
+			<i class="fa fa-trash"></i></a></td>
+      
+    </tr>
+			
+	
+	  
+	  <?php
+		}
+	  ?>
+		

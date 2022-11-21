@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/50426504/get-mysql-records-based-upon-checkbox-selected-unselected-and-export-to-ms-exc
