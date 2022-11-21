@@ -40,7 +40,8 @@ if(isset ($_SESSION['id']) && isset($_SESSION['user_name'])){
       var packing = document.getElementById("packing").value !== "" ? parseInt(document.getElementById("packing").value) : 0;
       var custom = document.getElementById("custom").value !== "" ? parseInt(document.getElementById("custom").value) : 0;
       var discount = document.getElementById("discount").value !== "" ? parseInt(document.getElementById("discount").value) : 0;
-      var result = weight * price + totaltransport + packing + custom - discount;
+	  document.getElementById("totalweight").value = weight;
+	  var result = weight * price + totaltransport + packing + custom - discount;
       document.getElementById("total").value = result;
     }, 50)
     return true;

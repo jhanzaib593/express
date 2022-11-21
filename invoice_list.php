@@ -84,7 +84,8 @@ $res=mysqli_query($conn,"select * from invoice_bill $sub_sql order by serailnunb
 		<input class="date" type="text" id="to" name="to" required value="<?php echo $toDate?>">
 		<input type="submit" name="submit" value="Filter">
 	</form>
-		  <h1 class="title text-center my-3">List Invoice</h1>
+  
+		  <h1 class="title text-center my-3" style="  padding-top: 3em !important;">List of Invoice</h1>
 	  		<form action="Excel.php" method="post">
 				<button type="submit" name="submit" class="btn btn-outline-primary float-end">Download</button>
 			</form>	  
