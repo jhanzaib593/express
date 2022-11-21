@@ -52,8 +52,8 @@ include "db_conn.php";
       </div>
     </div>
   </nav>'
-	
-	
+	<!-- Insert into MYSQL Database in PHP MYSQL -->
+	<!-- ALTER TABLE invoice_bill ADD FULLTEXT(`sname`, `receivedname`, `phonenum`, `receivednum`); -->
 
 	<?php
 $sub_sql="";
@@ -155,7 +155,7 @@ $res=mysqli_query($conn,"select * from invoice_bill $sub_sql order by serailnunb
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );
       });
- 
+      
     function getDate( element ) {
       var date;
       try {
